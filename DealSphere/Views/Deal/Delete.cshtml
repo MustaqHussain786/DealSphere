@@ -1,0 +1,60 @@
+﻿@model DealSphere.Models.Deal
+
+@{
+    ViewData["Title"] = "Delete Deal";
+}
+
+<h2>Delete Deal</h2>
+
+<div class="alert alert-warning">
+    <strong>Are you sure you want to delete this deal?</strong>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Title</dt>
+        <dd class="col-sm-9">@Model.Title</dd>
+
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Actual Price</dt>
+        <dd class="col-sm-9">₹@Model.ActualPrice</dd>
+
+        <dt class="col-sm-3">Discount Price</dt>
+        <dd class="col-sm-9">₹@Model.DiscountPrice</dd>
+
+        <dt class="col-sm-3">Rating</dt>
+        <dd class="col-sm-9">@Model.Rating</dd>
+
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">@Model.Category</dd>
+
+        <dt class="col-sm-3">Subcategory</dt>
+        <dd class="col-sm-9">@Model.Subcategory</dd>
+
+        <dt class="col-sm-3">Product URL</dt>
+        <dd class="col-sm-9"><a href="@Model.ProductUrl" target="_blank">@Model.ProductUrl</a></dd>
+
+        <dt class="col-sm-3">Image URL</dt>
+        <dd class="col-sm-9"><a href="@Model.ImageUrl" target="_blank">@Model.ImageUrl</a></dd>
+
+        <dt class="col-sm-3">Store</dt>
+        <dd class="col-sm-9">@Model.Store</dd>
+
+        <dt class="col-sm-3">Other Store Product URL</dt>
+        <dd class="col-sm-9"><a href="@Model.OtherStoreProductUrl" target="_blank">@Model.OtherStoreProductUrl</a></dd>
+
+        <dt class="col-sm-3">Other Store Name</dt>
+        <dd class="col-sm-9">@Model.OtherStoreName</dd>
+
+        <dt class="col-sm-3">Other Store Price</dt>
+        <dd class="col-sm-9">₹@Model.OtherStorePrice</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>

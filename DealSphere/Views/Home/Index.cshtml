@@ -1,0 +1,147 @@
+﻿@model List<DealSphere.Models.Deal>
+
+@{
+    ViewData["Title"] = "Home";
+    var currentCategory = ViewBag.Category as string;
+    var currentSearch = ViewBag.Search as string;
+    var page = (int)ViewBag.Page;
+    var totalPages = (int)ViewBag.TotalPages;
+    var categories = ViewBag.Categories as List<string>;
+}
+
+<!-- Hero Banner -->
+<div class="py-5 text-center text-white" style="background: linear-gradient(to right, #74ebd5, #acb6e5);">
+    <div class="container">
+        <h1 class="display-5 fw-bold">Welcome to DealSphere</h1>
+        <p class="lead">Discover the hottest deals across your favorite stores</p>
+    </div>
+</div>
+
+<!-- Search and Filter -->
+<div class="bg-light py-4">
+    <div class="container">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="search" value="@currentSearch" class="form-control" placeholder="Search deals..." />
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat" selected="@(cat == currentCategory ? "selected" : null)">@cat</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Deals Grid -->
+<div class="py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <h2 class="mb-4 text-center text-primary fw-bold">🔥 Trending Deals</h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-info text-center">No deals available right now. Please check back later!</div>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+                @foreach (var deal in Model)
+                {
+                    <div class="col">
+                        <div class="card border-0 shadow-sm deal-card" data-aos="fade-up">
+                            @if (!string.IsNullOrEmpty(deal.ImageUrl))
+                            {
+                                <img src="@deal.ImageUrl" class="card-img-top" alt="@deal.Title" />
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@deal.Title</h5>
+                                <p class="card-text text-muted small">@deal.Description</p>
+                            </div>
+                            <div class="card-footer bg-white border-0">
+                                <p class="mb-1">
+                                    <span class="text-muted text-decoration-line-through">₹@deal.ActualPrice</span>
+                                    <span class="fw-bold text-success ms-2">₹@deal.DiscountPrice</span>
+                                </p>
+                                <small class="text-muted">From: @deal.Store</small>
+                                <div class="mt-2">
+                                    <a asp-controller="Deal" asp-action="Details" asp-route-id="@deal.Id" class="btn btn-outline-primary btn-sm w-100">View Deal</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- Pagination -->
+        @if (totalPages > 1)
+        {
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == page ? "active" : "")">
+                            <a class="page-link" href="?search=@currentSearch&category=@currentCategory&page=@i">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .deal-card {
+            width: 100%;
+            height: 380px;
+            max-width: 230px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            transition: all 0.3s ease-in-out;
+            border-radius: 0.5rem;
+        }
+
+            .deal-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .deal-card img {
+                height: 130px;
+                object-fit: cover;
+                border-top-left-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+            }
+
+            .deal-card .card-body {
+                flex-grow: 1;
+                overflow: hidden;
+                padding: 0.75rem;
+            }
+
+            .deal-card .card-footer {
+                background-color: white;
+                padding: 0.75rem;
+            }
+
+        @@media (max-width: 576px) {
+            .deal-card
+
+        {
+            height: auto;
+            max-width: 100%;
+        }
+
+        }
+    </style>
+}

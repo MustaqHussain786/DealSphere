@@ -1,0 +1,32 @@
+﻿<h2>Upload Deals via Excel</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success">@ViewBag.Success</div>
+}
+
+<form asp-action="UploadExcel" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Select Excel File (.xlsx):</label>
+        <input type="file" name="file" class="form-control" required />
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Upload</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+        <a class="btn btn-info ms-2" href="~/files/sample_deals_upload.xlsx" download>Download Sample Excel</a>
+    </div>
+</form>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}

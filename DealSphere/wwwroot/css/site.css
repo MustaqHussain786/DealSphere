@@ -1,0 +1,58 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+
+/* Compact card design */
+.card {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease-in-out;
+}
+
+    /* Smaller image on cards */
+    .card img {
+        height: 120px; /* smaller height */
+        object-fit: contain; /* show the full image with padding */
+        padding: 10px;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+    }
+
+    }
+
+    /* Hover effect */
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+/* Card body spacing */
+.card-body {
+    padding: 0.5rem;
+}
+
+/* Card footer compact */
+.card-footer {
+    padding: 0.5rem 0.75rem;
+}

@@ -1,0 +1,102 @@
+﻿@model DealSphere.Models.Deal
+
+@{
+    ViewData["Title"] = "Edit Deal";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Edit Deal</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ActualPrice" class="form-label"></label>
+                    <input asp-for="ActualPrice" class="form-control" />
+                    <span asp-validation-for="ActualPrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DiscountPrice" class="form-label"></label>
+                    <input asp-for="DiscountPrice" class="form-control" />
+                    <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Rating" class="form-label"></label>
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category" class="form-label"></label>
+                    <input asp-for="Category" class="form-control" />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Subcategory" class="form-label"></label>
+                    <input asp-for="Subcategory" class="form-control" />
+                    <span asp-validation-for="Subcategory" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductUrl" class="form-label"></label>
+                    <input asp-for="ProductUrl" class="form-control" />
+                    <span asp-validation-for="ProductUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Store" class="form-label"></label>
+                    <input asp-for="Store" class="form-control" />
+                    <span asp-validation-for="Store" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="OtherStoreProductUrl" class="form-label"></label>
+                    <input asp-for="OtherStoreProductUrl" class="form-control" />
+                    <span asp-validation-for="OtherStoreProductUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="OtherStoreName" class="form-label"></label>
+                    <input asp-for="OtherStoreName" class="form-control" />
+                    <span asp-validation-for="OtherStoreName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="OtherStorePrice" class="form-label"></label>
+                    <input asp-for="OtherStorePrice" class="form-control" />
+                    <span asp-validation-for="OtherStorePrice" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

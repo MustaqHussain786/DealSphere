@@ -1,0 +1,40 @@
+﻿@model List<Deal>
+
+<h2>Preview Deals</h2>
+
+<form asp-action="ConfirmUpload" method="post">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Rating</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Store</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var deal in Model)
+            {
+                <tr>
+                    <td>@deal.Title</td>
+                    <td>@deal.Description</td>
+                    <td>@deal.ActualPrice</td>
+                    <td>@deal.DiscountPrice</td>
+                    <td>@deal.Rating</td>
+                    <td>@deal.Category</td>
+                    <td>@deal.Subcategory</td>
+                    <td>@deal.Store</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Confirm & Save</button>
+        <a asp-action="UploadExcel" class="btn btn-secondary ms-2">Cancel</a>
+    </div>
+</form>

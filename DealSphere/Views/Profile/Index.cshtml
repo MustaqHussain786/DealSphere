@@ -1,0 +1,53 @@
+﻿@model DealSphere.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Profile Settings";
+}
+@if (!string.IsNullOrEmpty(Model.ExistingProfilePicturePath))
+{
+    <img src="~/uploads/@Model.ExistingProfilePicturePath" width="100" height="100" class="rounded-circle" />
+}
+else
+{
+    <img src="~/images/default-profile.png" width="100" height="100" class="rounded-circle" />
+}
+<div class="container mt-4">
+    <h2>Profile Settings</h2>
+
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">@ViewBag.Success</div>
+    }
+
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ProfilePicture" class="form-label"></label>
+            <input asp-for="ProfilePicture" type="file" class="form-control" />
+            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ExistingProfilePicturePath))
+        {
+            <div class="mb-3">
+                <img src="@Model.ExistingProfilePicturePath" alt="Profile Picture" width="120" class="rounded" />
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

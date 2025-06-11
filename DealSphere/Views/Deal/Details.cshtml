@@ -1,0 +1,157 @@
+﻿@model DealSphere.Models.Deal
+@using DealSphere.Models
+
+@{
+    ViewData["Title"] = "Deal Details";
+    var request = Context.Request;
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container py-5">
+    <div class="row align-items-center g-5">
+        <!-- Image Section -->
+        <div class="col-md-6 text-center">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded shadow-sm" style="max-height: 400px; object-fit: cover;" />
+            }
+            else
+            {
+                <div class="bg-light d-flex align-items-center justify-content-center rounded shadow-sm" style="height: 300px;">
+                    <span class="text-muted">No Image Available</span>
+                </div>
+            }
+        </div>
+
+        <!-- Info Section -->
+        <div class="col-md-6">
+            <h1 class="fw-bold text-primary">@Model.Title</h1>
+            <p class="text-muted">@Model.Description</p>
+
+            <div class="mb-3">
+                <span class="badge bg-secondary">Store: @Model.Store</span>
+            </div>
+
+            <div class="fs-4 mb-4">
+                <span class="text-muted text-decoration-line-through">₹@Model.ActualPrice</span>
+                <span class="fw-bold text-success ms-3">₹@Model.DiscountPrice</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-outline-primary" href="/">← Back to Home</a>
+
+                @if (!string.IsNullOrEmpty(Model.ProductUrl))
+                {
+                    <a class="btn btn-success" href="@Model.ProductUrl" target="_blank" rel="noopener noreferrer">
+                        Buy Now
+                    </a>
+                }
+
+                <a class="btn btn-secondary" href="#" disabled>
+                    Reviews (Coming Soon)
+                </a>
+
+                <a class="btn btn-info text-white" href="#" disabled>
+                    Watch Video (Coming Soon)
+                </a>
+
+                <!-- Share Button Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-share-fill me-1"></i> Share
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0);" onclick="shareDeal()">
+                                📱 Share via Device
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" target="_blank" href="https://wa.me/?text=@Uri.EscapeDataString(Model.Title + " - " + (Model.ProductUrl ?? $"{request.Scheme}://{request.Host}{request.Path}"))">
+                                💬 Share on WhatsApp
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" target="_blank" href="https://twitter.com/intent/tweet?text=@Uri.EscapeDataString(Model.Title + " - " + (Model.ProductUrl ?? $"{request.Scheme}://{request.Host}{request.Path}"))">
+                                🐦 Share on Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.PriceHistories != null && Model.PriceHistories.Any())
+{
+    <div class="mt-5">
+        <h4 class="mb-3">📈 Price History</h4>
+        <canvas id="priceChart" height="100"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    @string.Join(",", Model.PriceHistories.Select(p => $"\"{p.DateRecorded.ToShortDateString()}\""))
+                ],
+                datasets: [{
+                    label: 'Price (₹)',
+                    data: [
+                        @string.Join(",", Model.PriceHistories.Select(p => p.Price))
+                    ],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+}
+
+
+@section Styles {
+    <style>
+        .btn-success {
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            border: none;
+        }
+
+            .btn-success:hover {
+                background: linear-gradient(135deg, #5fdde2, #7c9ee6);
+            }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        function shareDeal() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '@Model.Title',
+                    text: 'Check out this deal on DealSphere!',
+                    url: window.location.href
+                }).catch((error) => console.log('Sharing failed', error));
+            } else {
+                alert('Web share not supported on this browser. Try WhatsApp or Twitter!');
+            }
+        }
+
+
+    </script>
+}
